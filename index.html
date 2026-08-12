@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAVTTC - Skills Verification Program</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--green:#006b4f;--green2:#008f68;--dark:#09263b;--muted:#60758a;--line:#dce9e4;--soft:#eff9f5}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--dark);background:#fff}
+a{text-decoration:none;color:inherit}
+header{position:absolute;top:0;left:0;right:0;z-index:50;background:rgba(255,255,255,.96);border-bottom:1px solid #e7eee9;box-shadow:0 5px 22px rgba(0,50,35,.06)}
+.navbar{height:82px;padding:0 5vw;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:27px;font-weight:950;letter-spacing:-1px;color:var(--dark)}.logo span{color:var(--green)}
+.menu-icon{width:48px;height:48px;border:1px solid #d7e5df;border-radius:13px;display:grid;place-items:center;color:var(--green);font-size:25px;cursor:pointer;background:#fff}
+.side-menu{position:fixed;top:0;right:-360px;width:340px;height:100vh;background:rgba(255,255,255,.98);backdrop-filter:blur(18px);z-index:100;padding:24px;box-shadow:-20px 0 50px rgba(0,40,30,.15);transition:right .3s ease}
+.side-menu.active{right:0}.close-btn{text-align:right;font-size:25px;color:var(--dark);cursor:pointer;margin-bottom:18px}
+.side-menu ul{list-style:none;padding:0;margin:0}.side-menu li{border-bottom:1px solid #e8eeeb}.side-menu a{display:block;padding:15px 5px;font-weight:750;color:var(--dark)}.side-menu a:hover{color:var(--green)}
+.contact-dropdown{max-height:0;overflow:hidden;transition:max-height .3s ease;padding-left:8px}.contact.active .contact-dropdown{max-height:110px}.contact-dropdown p{margin:8px 0 12px;color:var(--muted);font-size:14px}
+.hero{min-height:700px;padding:125px 5vw 55px;display:grid;grid-template-columns:.85fr 1.15fr;gap:35px;align-items:center;background:#fff;overflow:hidden}
+.hero-copy{max-width:650px}.eyebrow{display:inline-flex;gap:8px;align-items:center;background:#e9f7f2;border:1px solid #cbe9dd;color:var(--green);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:850;margin-bottom:18px}
+.hero h1{font-size:clamp(2.8rem,5vw,5rem);line-height:1.01;letter-spacing:-2.7px;margin:0 0 20px;font-weight:950}.hero h1 span{color:var(--green)}
+.hero p{font-size:1.08rem;line-height:1.72;color:var(--muted);max-width:610px;margin:0 0 25px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 22px;border-radius:12px;font-weight:850;transition:.2s}.btn:hover{transform:translateY(-2px)}
+.btn-primary{color:#fff;background:linear-gradient(135deg,var(--green),var(--green2));box-shadow:0 12px 28px rgba(0,107,79,.2)}.btn-secondary{color:var(--green);background:#fff;border:1px solid #9bcdbb}
+.hero-features{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:26px}.hero-feature{padding:13px;border:1px solid var(--line);border-radius:13px;background:#fff;box-shadow:0 7px 20px rgba(0,50,35,.05)}.hero-feature i{color:var(--green)}.hero-feature strong{display:block;font-size:13px;margin-top:5px}.hero-feature small{color:var(--muted);font-size:11px}
+.hero-visual img{width:100%;max-height:520px;object-fit:contain;display:block;filter:drop-shadow(0 25px 35px rgba(10,60,45,.13))}
+.stats-strip{display:grid;grid-template-columns:repeat(3,1fr);width:min(1100px,90%);margin:-35px auto 0;background:#063f31;color:#fff;border-radius:18px;overflow:hidden;box-shadow:0 18px 38px rgba(0,50,35,.18);position:relative;z-index:3}
+.stat{padding:18px 20px;display:flex;align-items:center;justify-content:center;gap:11px;border-right:1px solid rgba(255,255,255,.12)}.stat:last-child{border:0}.stat i{color:#8de0bf;font-size:22px}.stat strong{font-size:1.3rem;display:block}.stat span{font-size:11px;color:#c8e7dc}
+.services-home{padding:70px 5vw 30px;background:#fff}.section-title{text-align:center}.section-title h2{font-size:2.2rem;margin:0 0 8px}.section-title p{margin:0 auto 30px;color:var(--muted)}
+.service-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.service-card{padding:24px;border:1px solid var(--line);border-radius:17px;background:#fff;box-shadow:0 10px 28px rgba(0,50,35,.055);transition:.2s}.service-card:hover{transform:translateY(-4px);border-color:#a9d8c7}
+.service-icon{width:48px;height:48px;border-radius:14px;background:var(--soft);display:grid;place-items:center;color:var(--green);font-size:20px;margin-bottom:14px}.service-card h3{margin:0 0 7px;font-size:1.1rem}.service-card p{margin:0;color:var(--muted);line-height:1.6;font-size:.92rem}
+.office-cta{max-width:1200px;margin:22px auto 75px;padding:26px 28px;border:1px solid #cfe6dc;border-radius:20px;background:linear-gradient(135deg,#f4fbf8,#fff);display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:0 12px 30px rgba(0,50,35,.06)}
+.office-cta .office-icon{width:58px;height:58px;border-radius:16px;background:#dff3eb;color:var(--green);display:grid;place-items:center;font-size:25px;flex:0 0 auto}.office-copy{flex:1}.office-copy h3{margin:0 0 6px;font-size:1.35rem}.office-copy p{margin:0;color:var(--muted);line-height:1.55}
+.office-btn{background:var(--green);color:#fff;padding:13px 19px;border-radius:11px;font-weight:850;white-space:nowrap}.office-btn:hover{background:#00573f}
+.support{position:fixed;right:22px;bottom:22px;background:var(--green2);color:#fff;padding:13px 18px;border-radius:999px;font-weight:850;box-shadow:0 10px 25px rgba(0,107,79,.25);z-index:30}
+footer{background:#062e25;color:#d8eee7;text-align:center;padding:35px 5vw}.footer-top-label{color:#fff;font-weight:800;margin-bottom:16px}.social-icons{display:flex;justify-content:center;gap:10px;margin-bottom:18px}.social-icons a{width:42px;height:42px;border-radius:12px;background:#fff;color:var(--green);display:grid;place-items:center}.social-icons a:hover{background:#dff3eb}
+@media(max-width:900px){.hero{grid-template-columns:1fr;padding:115px 25px 30px}.hero-visual{order:2}.hero-visual img{max-height:430px}.service-grid{grid-template-columns:1fr 1fr}.stats-strip{margin:0 auto;width:calc(100% - 36px)}}
+@media(max-width:640px){.navbar{height:70px;padding:0 18px}.logo{font-size:23px}.hero{padding:98px 18px 15px;gap:8px}.hero h1{font-size:2.65rem;letter-spacing:-1.7px}.hero p{font-size:1rem}.hero-actions{display:grid;grid-template-columns:1fr 1fr}.btn{width:100%}.hero-features{grid-template-columns:1fr}.hero-visual{margin:0 -8px}.hero-visual img{width:100%;max-height:none}.stats-strip{grid-template-columns:repeat(3,1fr);width:calc(100% - 24px);border-radius:14px}.stat{padding:12px 4px;display:block;text-align:center}.stat i{font-size:17px}.stat strong{font-size:1rem}.stat span{font-size:8px}.services-home{padding:52px 18px 15px}.section-title h2{font-size:1.8rem}.service-grid{grid-template-columns:1fr}.office-cta{margin:22px 0 60px;padding:20px;align-items:flex-start}.office-cta .office-icon{width:50px;height:50px;font-size:21px}.office-copy h3{font-size:1.15rem}.office-copy p{font-size:.9rem}.office-btn{display:inline-flex;margin-top:12px}.side-menu{width:min(340px,90vw)}}
+
+/* Final requested adjustments */
+.logo{display:flex;align-items:center;gap:9px!important;white-space:nowrap}
+.logo .navttc-name{color:#09263b!important;font-weight:950;letter-spacing:-1.1px}
+.logo .appointment-name{color:#008f68!important;font-weight:850;letter-spacing:-.6px}
+.hero{
+  grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);
+  grid-template-rows:auto auto;
+}
+.hero-copy{grid-column:1;grid-row:1}
+.hero-visual{grid-column:2;grid-row:1 / span 2;align-self:center}
+.hero-features{grid-column:1;grid-row:2;align-self:start}
+@media(max-width:900px){
+  .hero{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    gap:12px!important;
+  }
+  .hero-copy{display:contents}
+  .eyebrow,.hero h1,.hero p{order:1}
+  .hero-actions{order:2}
+  .hero-visual{
+    order:3!important;
+    margin:0!important;
+    width:100%;
+  }
+  .hero-visual img{
+    width:100%!important;
+    max-height:none!important;
+    object-fit:contain!important;
+    display:block!important;
+  }
+  .hero-features{
+    order:4!important;
+    width:100%;
+    margin-top:4px!important;
+  }
+}
+@media(max-width:640px){
+  .logo{font-size:23px!important;gap:7px!important}
+  .hero-actions{margin-bottom:0!important}
+  .hero-visual{margin-top:0!important}
+}
+
+
+/* Official-style service feature cards */
+.hero-features{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:18px!important;
+  width:100%!important;
+  align-items:stretch!important;
+  margin-top:24px!important;
+}
+.hero-feature{
+  width:100%!important;
+  min-width:0!important;
+  min-height:142px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  padding:22px 18px!important;
+  border:1px solid #d9ebe5!important;
+  border-radius:18px!important;
+  background:#fff!important;
+  box-shadow:0 10px 28px rgba(8,55,44,.07)!important;
+}
+.hero-feature i{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  height:42px!important;
+  margin:0 0 10px!important;
+  font-size:27px!important;
+  color:#008765!important;
+}
+.hero-feature strong{
+  display:block!important;
+  margin:0!important;
+  font-size:18px!important;
+  line-height:1.2!important;
+  color:#09263b!important;
+}
+.hero-feature small{
+  display:block!important;
+  margin-top:7px!important;
+  font-size:14px!important;
+  line-height:1.35!important;
+  color:#60758a!important;
+}
+@media(max-width:900px){
+  .hero-features{
+    grid-template-columns:1fr!important;
+    gap:14px!important;
+  }
+  .hero-feature{
+    min-height:120px!important;
+  }
+}
+
+
+/* Final: full-width white feature strip matching the stats strip */
+.hero-features{
+  grid-column:1 / -1!important;
+  grid-row:2!important;
+  width:min(1100px,90%)!important;
+  margin:24px auto 0!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:0!important;
+  background:#fff!important;
+  border:1px solid #d9ebe5!important;
+  border-radius:18px!important;
+  overflow:hidden!important;
+  box-shadow:0 14px 34px rgba(0,50,35,.08)!important;
+  position:relative!important;
+  z-index:2!important;
+}
+.hero-feature{
+  width:auto!important;
+  min-width:0!important;
+  min-height:112px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  padding:18px 22px!important;
+  border:0!important;
+  border-right:1px solid #e2eee9!important;
+  border-radius:0!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+.hero-feature:last-child{border-right:0!important}
+.hero-feature i{
+  height:auto!important;
+  margin:0 0 8px!important;
+  font-size:24px!important;
+  color:#008765!important;
+}
+.hero-feature strong{
+  margin:0!important;
+  font-size:17px!important;
+  line-height:1.2!important;
+  color:#09263b!important;
+}
+.hero-feature small{
+  margin-top:5px!important;
+  font-size:13px!important;
+  line-height:1.3!important;
+  color:#60758a!important;
+}
+/* Restore the matching official green statistics strip beneath it */
+.stats-strip{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  width:min(1100px,90%)!important;
+  margin:24px auto 0!important;
+  background:#063f31!important;
+  color:#fff!important;
+  border-radius:18px!important;
+  overflow:hidden!important;
+  box-shadow:0 18px 38px rgba(0,50,35,.14)!important;
+  position:relative!important;
+  z-index:3!important;
+}
+.stat{
+  min-height:82px!important;
+  padding:16px 20px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:11px!important;
+  border-right:1px solid rgba(255,255,255,.12)!important;
+  box-sizing:border-box!important;
+}
+.stat:last-child{border-right:0!important}
+.stat i{color:#8de0bf!important;font-size:22px!important}
+.stat strong{font-size:1.3rem!important;display:block!important}
+.stat span{font-size:11px!important;color:#c8e7dc!important;display:block!important}
+@media(max-width:900px){
+  .hero-features{width:calc(100% - 36px)!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;margin-top:18px!important}
+  .hero-feature{min-height:100px!important;padding:14px 10px!important}
+  .hero-feature strong{font-size:14px!important}
+  .hero-feature small{font-size:11px!important}
+  .stats-strip{width:calc(100% - 36px)!important}
+}
+@media(max-width:640px){
+  .hero-features{width:100%!important;grid-template-columns:1fr!important;border-radius:14px!important}
+  .hero-feature{min-height:92px!important;border-right:0!important;border-bottom:1px solid #e2eee9!important}
+  .hero-feature:last-child{border-bottom:0!important}
+  .stats-strip{width:calc(100% - 24px)!important;grid-template-columns:1fr!important;border-radius:14px!important}
+  .stat{border-right:0!important;border-bottom:1px solid rgba(255,255,255,.12)!important}
+  .stat:last-child{border-bottom:0!important}
+}
+
+</style>
+</head>
+<body>
+<header><div class="navbar"><a class="logo" href="index.html"><span class="navttc-name">NAVTTC</span> <span class="appointment-name">Appointment</span></a><button class="menu-icon" onclick="toggleMenu()" aria-label="Open menu">☰</button></div></header>
+
+<div class="side-menu" id="menu">
+<div class="close-btn" onclick="toggleMenu()">✕</div>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="https://svp-international.pacc.sa/check-certificate">Certificate Verification</a></li>
+<li><a href="https://svp-international.pacc.sa/applicant-result">Applicant Result</a></li>
+<li><a href="book.html">Book Appointment</a></li>
+<li><a href="centers.html">Our Centers</a></li>
+<li><a href="option.html">Options</a></li>
+<li class="contact" onclick="toggleContact(this)"><a href="javascript:void(0)">Contact Us <span class="contact-arrow">▼</span></a><div class="contact-dropdown"><p><i class="fas fa-phone"></i> +92-333-8181082</p><p><i class="fas fa-envelope"></i> info@svp-international.com</p></div></li>
+</ul></div>
+
+<section class="hero">
+<div class="hero-copy">
+<div class="eyebrow"><i class="fas fa-shield-halved"></i> WELCOME TO NAVTTC</div>
+<h1>Professional Skills.<br><span>Verified for Your Future.</span></h1>
+<p>Book your NAVTTC skills verification appointment quickly and easily. Get your trade assessed by professionals and take the next step toward better opportunities.</p>
+<div class="hero-actions">
+<a href="book.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Appointment</a>
+<a href="https://svp-international.pacc.sa/applicant-result" class="btn btn-secondary"><i class="fas fa-chart-line"></i> Check Result</a>
+</div>
+</div>
+<div class="hero-visual"><img src="workers-hero.png" alt="Construction worker, loading worker and heavy truck driver"></div>
+<div class="hero-features">
+<div class="hero-feature"><i class="fas fa-user-shield"></i><strong>Secure Process</strong><small>Professional verification</small></div>
+<div class="hero-feature"><i class="fas fa-bolt"></i><strong>Quick Booking</strong><small>Simple online process</small></div>
+<div class="hero-feature"><i class="fas fa-headset"></i><strong>Support</strong><small>We're here to help</small></div>
+</div>
+</section>
+<section class="services-home">
+<div class="section-title"><h2>Our Services</h2><p>Everything you need for a smooth NAVTTC verification journey.</p></div>
+<div class="service-grid">
+<a class="service-card" href="book.html"><div class="service-icon"><i class="fas fa-calendar-check"></i></div><h3>Appointment Booking</h3><p>Book your skills verification appointment through our simple online process.</p></a>
+<a class="service-card" href="https://svp-international.pacc.sa/applicant-result"><div class="service-icon"><i class="fas fa-search"></i></div><h3>Check Result</h3><p>Check your applicant result quickly through the official result portal.</p></a>
+<a class="service-card" href="https://svp-international.pacc.sa/check-certificate"><div class="service-icon"><i class="fas fa-certificate"></i></div><h3>Certificate Verification</h3><p>Verify the authenticity of your skills verification certificate.</p></a>
+</div>
+
+<a class="office-cta" href="centers.html">
+<div class="office-icon"><i class="fas fa-location-dot"></i></div>
+<div class="office-copy"><h3>Find Our 6 Offices in Gujranwala</h3><p>View all six offices, their addresses and the existing Google Maps directions from your original site.</p></div>
+<span class="office-btn">View Offices <i class="fas fa-arrow-right"></i></span>
+</a>
+</section>
+
+<a class="support" href="https://wa.me/923338181082" target="_blank"><i class="fab fa-whatsapp"></i> Support</a>
+
+<footer>
+<div class="footer-top-label">Markaz-e-Khidmat Mutakamal</div>
+<div class="social-icons">
+<a href="https://youtube.com/@hameedphotostudio9298?si=P5aayDx3hNtWAXXi" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="https://www.facebook.com/share/1ApuWfmQ8s/?mibextid=wwXIfr" target="_blank"><i class="fab fa-facebook-f"></i></a>
+<a href="https://www.instagram.com/photohome92?igsh=MTJpOGVwdml5ODFxcg==" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://maps.app.goo.gl/M4PBpMRiMDvFXYfp9" target="_blank"><i class="fas fa-map-marker-alt"></i></a>
+</div>
+<div>© 2026 NAVTTC Skills Verification Program. All rights reserved.</div>
+</footer>
+
+<script>
+function toggleMenu(){document.getElementById('menu').classList.toggle('active')}
+function toggleContact(el){el.classList.toggle('active')}
+document.addEventListener('click',function(e){
+ const menu=document.getElementById('menu');
+ if(menu.classList.contains('active') && !menu.contains(e.target) && !e.target.closest('.menu-icon')) menu.classList.remove('active');
+});
+</script>
+</body>
+</html>
